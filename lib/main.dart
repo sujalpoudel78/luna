@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:luna/pages/home_page.dart';
+import 'package:luna/pages/theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,6 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Luna',
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
+      home: HomePage(),
+    );
   }
 }

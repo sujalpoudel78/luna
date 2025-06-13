@@ -10,11 +10,12 @@ class AppTheme {
   static Color surfaceColor = Color(0xFF121212); //Lighter
   static Color dividerColor = Color(0xFF2E2E2E); // Divider lines
   static Color errorColor = Color(0xFFCF6679); // Error
+  static Color borderColor = Color.fromRGBO(255, 255, 255, .27);
 
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: backgroundDark,
+      scaffoldBackgroundColor: backgroundColor,
       primaryColor: primaryColor,
       dividerColor: dividerColor,
       colorScheme: const ColorScheme.dark().copyWith(
@@ -25,17 +26,26 @@ class AppTheme {
         error: errorColor,
       ),
       appBarTheme: AppBarTheme(
+        centerTitle: true,
         backgroundColor: backgroundColor,
         elevation: 0,
         iconTheme: IconThemeData(color: textColor),
         titleTextStyle: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
+          fontSize: 27,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 9,
+
           color: textColor
         ),
       ),
       textTheme: TextTheme(
+        titleLarge: TextStyle(
+          fontFamily: 'Fredoka',
+          fontSize: 27,
+          fontWeight: FontWeight.w700,
+          color: textColor,
+        ),
         headlineMedium: TextStyle(
           fontFamily: 'Fredoka',
           fontSize: 18,
@@ -47,8 +57,8 @@ class AppTheme {
           fontSize: 15,
           fontWeight: FontWeight.w300,
           color: textColor,
-        )
-      )
+        ),
+      ),
     );
   }
 }
