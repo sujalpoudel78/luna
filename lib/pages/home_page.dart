@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:luna/pages/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,14 +7,31 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget buildGridItem(String label) {
+    Widget buildGridItem(String iconPath, String label, String description) {
       return Container(
+        padding: EdgeInsets.all(18),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(9),
           border: Border.all(color: AppTheme.borderColor, width: 1),
         ),
-        child: Center(
-          child: Text(label, style: Theme.of(context).textTheme.titleLarge),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SvgPicture.asset(
+              iconPath,
+              height: 45,
+              width: 45,
+              colorFilter: ColorFilter.mode(
+                Theme.of(context).iconTheme.color ?? Colors.white,
+                BlendMode.srcIn,
+              ),
+            ),
+            SizedBox(height: 9),
+            Text(label, style: Theme.of(context).textTheme.titleLarge),
+            SizedBox(height: 9),
+            Text(description, style: Theme.of(context).textTheme.bodyMedium),
+          ],
         ),
       );
     }
@@ -23,31 +41,10 @@ class HomePage extends StatelessWidget {
         title: Text('WELCOME'),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  border: Border.all(color: AppTheme.borderColor, width: 1),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Feature Coming Soon',
-                      style: TextStyle(
-                        fontSize: 33,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              screenTime(),
               SizedBox(height: 18),
               Container(
                 padding: EdgeInsets.all(9),
@@ -64,15 +61,57 @@ class HomePage extends StatelessWidget {
                   crossAxisSpacing: 9,
                   mainAxisSpacing: 9,
                   children: [
-                    buildGridItem('page'),
-                    buildGridItem('page'),
-                    buildGridItem('page'),
+                    GestureDetector(
+                      onTap: () {
+                        print('page navigate');
+                      },
+                      child: buildGridItem(
+                        'assets/icons/list-check.svg',
+                        'page',
+                        'page',
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/notesPage');
+                      },
+                      child: buildGridItem(
+                        'assets/icons/book.svg',
+                        'page',
+                        'page',
+                      ),
+                    ),
+                    buildGridItem('assets/icons/sapling.svg', 'page', 'page'),
                   ],
                 ),
               ),
             ],
           ),
         ),
+    );
+  }
+}
+
+class screenTime extends StatelessWidget {
+  const screenTime({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(9),
+        border: Border.all(color: AppTheme.borderColor, width: 1),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Feature Coming Soon',
+            style: TextStyle(fontSize: 33, fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }
