@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:luna/pages/theme.dart';
 
 class NotesPage extends StatefulWidget {
@@ -11,7 +12,7 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   TextEditingController _addNotesController = TextEditingController();
 
-  List noteData = ['title'];
+  List noteData = ['placeholder'];
 
   void addNote() {
     final text = _addNotesController.text.trim();
@@ -31,21 +32,47 @@ class _NotesPageState extends State<NotesPage> {
         // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: noteData.length,
               itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: 6),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppTheme.borderColor),
-                    borderRadius: BorderRadius.circular(9),
+                return Slidable(
+                  key: ValueKey(noteData[index]),
+                  endActionPane: ActionPane(
+                    motion: ScrollMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (context) {
+                          setState(() {
+                            noteData.removeAt(index);
+                          });
+                        },
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ],
                   ),
-                  child: ListTile(
-                    title: Text(
-                      noteData[index],
-                      style: Theme.of(context).textTheme.titleMedium,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 6),
+                    decoration: BoxDecoration(
+                      // border: Border.all(color: AppTheme.borderColor),
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        noteData[index],
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
                   ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  color: AppTheme.dividerColor,
+                  thickness: 1,
+                  height: 9,
                 );
               },
             ),
