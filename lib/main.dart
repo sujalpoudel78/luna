@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:luna/pages/home_page.dart';
 import 'package:luna/pages/notes_page.dart';
 import 'package:luna/pages/theme.dart';
 
-void main() {
+void main() async{
+
+  await Hive.initFlutter();
+  await Hive.openBox('notesBox');
+
   runApp(const MyApp());
 }
 

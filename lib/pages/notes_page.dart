@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:luna/pages/theme.dart';
 
 class NotesPage extends StatefulWidget {
@@ -12,13 +13,13 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   TextEditingController _addNotesController = TextEditingController();
 
-  List noteData = ['placeholder'];
+  final Box notesBox = Hive.box('notesBox');
 
   void addNote() {
     final text = _addNotesController.text.trim();
     if (text.isNotEmpty) {
       setState(() {
-        noteData.add(text);
+        notesBox.add(text);
         _addNotesController.clear();
       });
     }
@@ -26,6 +27,7 @@ class _NotesPageState extends State<NotesPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic> noteData = notesBox.values.toList();
     return Scaffold(
       appBar: AppBar(title: Text('NOTES')),
       body: Column(
@@ -43,7 +45,7 @@ class _NotesPageState extends State<NotesPage> {
                       SlidableAction(
                         onPressed: (context) {
                           setState(() {
-                            noteData.removeAt(index);
+                            notesBox.deleteAt(index);
                           });
                         },
                         backgroundColor: Colors.red,

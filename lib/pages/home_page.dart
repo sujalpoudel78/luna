@@ -42,76 +42,67 @@ class HomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: SingleChildScrollView(
-          child: Column(
-            children: [
-              screenTime(),
-              SizedBox(height: 18),
-              Container(
-                padding: EdgeInsets.all(9),
-                width: double.infinity,
-                height: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  border: Border.all(color: AppTheme.borderColor, width: 1),
-                ),
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  crossAxisSpacing: 9,
-                  mainAxisSpacing: 9,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        print('page navigate');
-                      },
-                      child: buildGridItem(
-                        'assets/icons/list-check.svg',
-                        'page',
-                        'page',
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/notesPage');
-                      },
-                      child: buildGridItem(
-                        'assets/icons/book.svg',
-                        'page',
-                        'page',
-                      ),
-                    ),
-                    buildGridItem('assets/icons/sapling.svg', 'page', 'page'),
-                  ],
-                ),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9),
+                border: Border.all(color: AppTheme.borderColor, width: 1),
               ),
-            ],
-          ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Feature Coming Soon',
+                    style: TextStyle(fontSize: 33, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 18),
+            Container(
+              padding: EdgeInsets.all(9),
+              width: double.infinity,
+              height: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(9),
+                border: Border.all(color: AppTheme.borderColor, width: 1),
+              ),
+              child: GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisSpacing: 9,
+                mainAxisSpacing: 9,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      print('page navigate');
+                    },
+                    child: buildGridItem(
+                      'assets/icons/list-check.svg',
+                      'page',
+                      'page',
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/notesPage');
+                    },
+                    child: buildGridItem(
+                      'assets/icons/book.svg',
+                      'Notes',
+                      'Quick Notes',
+                    ),
+                  ),
+                  buildGridItem('assets/icons/sapling.svg', 'page', 'page'),
+                ],
+              ),
+            ),
+          ],
         ),
-    );
-  }
-}
-
-class screenTime extends StatelessWidget {
-  const screenTime({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(9),
-        border: Border.all(color: AppTheme.borderColor, width: 1),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Feature Coming Soon',
-            style: TextStyle(fontSize: 33, fontWeight: FontWeight.w500),
-          ),
-        ],
       ),
     );
   }
