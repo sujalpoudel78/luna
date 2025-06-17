@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:luna/pages/notes_page.dart';
 import 'package:luna/pages/theme.dart';
 
 class HomePage extends StatelessWidget {
@@ -78,18 +79,46 @@ class HomePage extends StatelessWidget {
                 mainAxisSpacing: 9,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      print('page navigate');
-                    },
+                    onTap: () {},
                     child: buildGridItem(
                       'assets/icons/list-check.svg',
-                      'page',
-                      'page',
+                      '---',
+                      '---',
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/notesPage');
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          //gestures on iOS wont work with this
+                          transitionDuration: Duration(milliseconds: 180),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  NotesPage(),
+                          transitionsBuilder: (
+                            context,
+                            animation,
+                            secondaryAnimation,
+                            child,
+                          ) {
+                            final offsetAnimation = Tween<Offset>(
+                              begin: Offset(1.0, 0.0),
+                              end: Offset.zero,
+                            ).animate(
+                              CurvedAnimation(
+                                parent: animation,
+                                curve: Curves.easeInOut,
+                              ),
+                            );
+
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
                     },
                     child: buildGridItem(
                       'assets/icons/book.svg',
@@ -97,7 +126,7 @@ class HomePage extends StatelessWidget {
                       'Quick Notes',
                     ),
                   ),
-                  buildGridItem('assets/icons/sapling.svg', 'page', 'page'),
+                  buildGridItem('assets/icons/sapling.svg', '---', '---'),
                 ],
               ),
             ),
