@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:luna/pages/habit_page.dart';
 import 'package:luna/pages/home_page.dart';
 import 'package:luna/pages/notes_page.dart';
 import 'package:luna/pages/theme.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         home: HomePage(),
         routes: {
-          '/notesPage':(context) => const NotesPage()
+          '/notesPage':(context) => const NotesPage(),
+          '/habitPage':(context) => const HabitPage(),
         },
       ),
     );

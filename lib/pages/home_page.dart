@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:luna/pages/habit_page.dart';
 import 'package:luna/pages/notes_page.dart';
 import 'package:luna/pages/theme.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+  Route pageNavigateAnimation(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (_, __, ___) => page,
+      transitionsBuilder: (_, animation, __, child) {
+        final offsetAnimation = Tween<Offset>(
+          begin: Offset(1, 0),
+          end: Offset.zero,
+        ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut));
+        return SlideTransition(position: offsetAnimation, child: child);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget buildGridItem(String iconPath, String label, String description) {
+    Widget buildGridItem(String iconPath, String label) {
       return Container(
         padding: EdgeInsets.all(18),
         decoration: BoxDecoration(
@@ -31,7 +45,6 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 9),
             Text(label, style: Theme.of(context).textTheme.titleLarge),
             SizedBox(height: 9),
-            Text(description, style: Theme.of(context).textTheme.bodyMedium),
           ],
         ),
       );
@@ -39,7 +52,7 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('WELCOME'),
+        title: Text('LUNA'),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: SingleChildScrollView(
@@ -79,54 +92,21 @@ class HomePage extends StatelessWidget {
                 mainAxisSpacing: 9,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context,pageNavigateAnimation(HabitPage()));
+                    },
                     child: buildGridItem(
                       'assets/icons/list-check.svg',
-                      '---',
-                      '---',
+                      'Habit Tracker',
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          //gestures on iOS wont work with this
-                          transitionDuration: Duration(milliseconds: 180),
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  NotesPage(),
-                          transitionsBuilder: (
-                            context,
-                            animation,
-                            secondaryAnimation,
-                            child,
-                          ) {
-                            final offsetAnimation = Tween<Offset>(
-                              begin: Offset(1.0, 0.0),
-                              end: Offset.zero,
-                            ).animate(
-                              CurvedAnimation(
-                                parent: animation,
-                                curve: Curves.easeInOut,
-                              ),
-                            );
-
-                            return SlideTransition(
-                              position: offsetAnimation,
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
+                      Navigator.push(context, pageNavigateAnimation(NotesPage()));
                     },
-                    child: buildGridItem(
-                      'assets/icons/book.svg',
-                      'Notes',
-                      'Quick Notes',
-                    ),
+                    child: buildGridItem('assets/icons/book.svg', 'Notes'),
                   ),
-                  buildGridItem('assets/icons/sapling.svg', '---', '---'),
+                  buildGridItem('assets/icons/sapling.svg', '---'),
                 ],
               ),
             ),
