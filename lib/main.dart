@@ -9,6 +9,7 @@ void main() async{
 
   await Hive.initFlutter();
   await Hive.openBox('notesBox');
+  await Hive.openBox('habitsBox');
 
   runApp(const MyApp());
 }
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 9,right: 9,top: 0,bottom: 21),
+      padding: const EdgeInsets.only(left: 0,right: 0,top: 0,bottom: 21),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Luna',

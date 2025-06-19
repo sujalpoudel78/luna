@@ -50,67 +50,70 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('LUNA'),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
-                border: Border.all(color: AppTheme.borderColor, width: 1),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Feature Coming Soon',
-                    style: TextStyle(fontSize: 33, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 18),
-            Container(
-              padding: EdgeInsets.all(9),
-              width: double.infinity,
-              height: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
-                border: Border.all(color: AppTheme.borderColor, width: 1),
-              ),
-              child: GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 9,
-                mainAxisSpacing: 9,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context,pageNavigateAnimation(HabitPage()));
-                    },
-                    child: buildGridItem(
-                      'assets/icons/list-check.svg',
-                      'Habit Tracker',
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 9,vertical: 0),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('LUNA'),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9),
+                  border: Border.all(color: AppTheme.borderColor, width: 1),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Feature Coming Soon',
+                      style: TextStyle(fontSize: 33, fontWeight: FontWeight.w500),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, pageNavigateAnimation(NotesPage()));
-                    },
-                    child: buildGridItem('assets/icons/book.svg', 'Notes'),
-                  ),
-                  buildGridItem('assets/icons/sapling.svg', '---'),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 18),
+              Container(
+                padding: EdgeInsets.all(9),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(9),
+                  border: Border.all(color: AppTheme.borderColor, width: 1),
+                ),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisSpacing: 9,
+                  mainAxisSpacing: 9,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,pageNavigateAnimation(HabitPage()));
+                      },
+                      child: buildGridItem(
+                        'assets/icons/list-check.svg',
+                        'Habit Tracker',
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, pageNavigateAnimation(NotesPage()));
+                      },
+                      child: buildGridItem('assets/icons/book.svg', 'Notes'),
+                    ),
+                    buildGridItem('assets/icons/sapling.svg', '---'),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

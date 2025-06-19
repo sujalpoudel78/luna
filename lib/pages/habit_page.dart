@@ -1,9 +1,9 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:luna/models/habit_model.dart';
+import 'package:luna/pages/habit_add.dart';
 import 'package:luna/pages/theme.dart';
-
-double fontSize = 18;
-double borderRadius = 50;
 
 final commonTextStyle = TextStyle(
   fontSize: 18,
@@ -25,11 +25,21 @@ class HabitPage extends StatefulWidget {
 }
 
 class _HabitPageState extends State<HabitPage> {
+  final Box habitsBox = Hive.box('habitsBox');
+
+  void createNewHabit() {
+    showModalBottomSheet(context: context, builder: (context) => HabitAdd(),
+    isScrollControlled: true);
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<dynamic> habits = habitsBox.values.toList();
+
     return Scaffold(
       appBar: AppBar(title: Text('HABITS')),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           EasyDateTimeLine(
             initialDate: DateTime.now(),
@@ -41,7 +51,7 @@ class _HabitPageState extends State<HabitPage> {
               selectedDateStyle: commonTextStyle,
             ),
             dayProps: EasyDayProps(
-              width: MediaQuery.of(context).size.width/7,
+              width: MediaQuery.of(context).size.width / 7,
 
               dayStructure: DayStructure.dayNumDayStr,
               todayStyle: commonDayStyle,
@@ -53,13 +63,23 @@ class _HabitPageState extends State<HabitPage> {
               todayHighlightColor: AppTheme.primaryColor,
             ),
           ),
+          SizedBox(height: 27),
           Expanded(
-            child: Center(
-              child: Text(
-                '---',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(color: AppTheme.dividerColor),
+                  child: ListTile(title: Text(habits[index].title)),
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 18),
+              itemCount: habits.length,
             ),
+          ),
+          FloatingActionButton(
+            onPressed: createNewHabit,
+            splashColor: AppTheme.accentColor,
+            child: Icon(Icons.add, color: AppTheme.textColor),
           ),
         ],
       ),

@@ -60,8 +60,8 @@ class AppTheme {
         ),
         bodyMedium: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 15,
-          fontWeight: FontWeight.w300,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
           color: textColor,
         ),
       ),
