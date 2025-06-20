@@ -7,7 +7,7 @@ class AppTheme {
   static Color primaryColor = Color(0xFF9B5FFF); // Soft purple
   static Color accentColor = Color(0xFFC2A3FF); // Light lavender tone
   static Color textColor = Color(0xFFE4E4E7); // Light gray text
-  static Color surfaceColor = Color(0xFF121212); //Lighter
+  static Color surfaceColor = Color(0xFF212121); //Lighter
   static Color dividerColor = Color(0xFF2E2E2E); // Divider lines
   static Color errorColor = Color(0xFFCF6679); // Error
   static Color borderColor = Color.fromRGBO(255, 255, 255, .27);

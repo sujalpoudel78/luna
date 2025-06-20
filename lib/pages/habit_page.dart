@@ -24,12 +24,25 @@ class HabitPage extends StatefulWidget {
   State<HabitPage> createState() => _HabitPageState();
 }
 
+final Box habitsBox = Hive.box('habitsBox');
+
+  final habitController = TextEditingController();
 class _HabitPageState extends State<HabitPage> {
-  final Box habitsBox = Hive.box('habitsBox');
+
+  void addHabit() {
+    final habitName = habitController.text.trim();
+    if (habitName.isNotEmpty) {
+      setState(() {
+      habitsBox.add(habitName);
+      habitController.clear();
+      });
+    }
+  }
 
   void createNewHabit() {
-    showModalBottomSheet(context: context, builder: (context) => HabitAdd(),
-    isScrollControlled: true);
+    setState(() {
+      showModalBottomSheet(context: context, builder: (context) => HabitAdd(onCreate: addHabit,));
+    });
   }
 
   @override
@@ -64,12 +77,14 @@ class _HabitPageState extends State<HabitPage> {
             ),
           ),
           SizedBox(height: 27),
+          ElevatedButton(onPressed: habitsBox.clear, child: Text('clear')),
+          SizedBox(height: 27),
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(color: AppTheme.dividerColor),
-                  child: ListTile(title: Text(habits[index].title)),
+                  child: ListTile(title: Text(habits[index])),
                 );
               },
               separatorBuilder: (context, index) => SizedBox(height: 18),
