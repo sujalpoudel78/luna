@@ -48,8 +48,8 @@ class AppTheme {
         ),
         titleMedium: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
+          fontSize: 21,
+          fontWeight: FontWeight.w600,
           color: textColor,
         ),
         headlineMedium: TextStyle(
@@ -64,6 +64,12 @@ class AppTheme {
           fontWeight: FontWeight.w500,
           color: textColor,
         ),
+        labelMedium: TextStyle(
+          fontFamily: 'Fredoka',
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          color: textColor,
+        )
       ),
     );
   }

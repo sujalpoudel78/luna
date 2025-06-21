@@ -1,47 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:luna/pages/habit_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:luna/pages/theme.dart';
 
-class HabitAdd extends StatefulWidget {
-  final VoidCallback onCreate;
-  const HabitAdd({super.key,required this.onCreate});
+class HabitAdd extends StatelessWidget {
+  const HabitAdd({super.key});
 
-  @override
-  State<HabitAdd> createState() => _HabitAddState();
-}
-
-class _HabitAddState extends State<HabitAdd> {
   @override
   Widget build(BuildContext context) {
-    
-    final Function createHabit;
+    final habitController = TextEditingController();
+
+    void addHabit() {
+      final habitName = habitController.text.trim();
+      if (habitName.isNotEmpty) {
+        Hive.box('habitsBox').add(habitName);
+        Navigator.pop(context);
+      }
+    }
 
     return Container(
-      width: double.infinity,
-      child: Padding(
-        padding: EdgeInsets.fromLTRB(21, 33, 21, 0),
-        child: ListView(
-          children: [
-            Center(child: Text('Add New Task')),
-            SizedBox(height: 18),
-            Container(
-              decoration: BoxDecoration(
-                color: AppTheme.surfaceColor,
-                borderRadius: BorderRadius.circular(9),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 9, vertical: 3),
-              child: TextField(
-                controller: habitController,
-                decoration: InputDecoration(
-                  hintText: 'Enter Habit Name',
-                  border: InputBorder.none,
-                ),
+      padding: const EdgeInsets.fromLTRB(21, 33, 21, 0),
+      child: ListView(
+        shrinkWrap: true,
+        children: [
+          const Center(
+            child: Text(
+              'Add New Task',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+            ),
+          ),
+          const SizedBox(height: 18),
+          Container(
+            decoration: BoxDecoration(
+              color: AppTheme.surfaceColor,
+              borderRadius: BorderRadius.circular(9),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 3),
+            child: TextField(
+              controller: habitController,
+              decoration: const InputDecoration(
+                hintText: 'Enter Habit Name',
+                border: InputBorder.none,
               ),
             ),
-            SizedBox(height: 18),
-            ElevatedButton(onPressed: widget.onCreate, child: Text('Add Habit')),
-          ],
-        ),
+          ),
+          const SizedBox(height: 18),
+          FilledButton(
+            onPressed: addHabit,
+            child: Text(
+              'Add Habit',
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+          ),
+        ],
       ),
     );
   }
