@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:luna/pages/theme.dart';
+import 'package:luna/models/habit_model.dart';
 
 class HabitAdd extends StatelessWidget {
   const HabitAdd({super.key});
@@ -12,7 +13,9 @@ class HabitAdd extends StatelessWidget {
     void addHabit() {
       final habitName = habitController.text.trim();
       if (habitName.isNotEmpty) {
-        Hive.box('habitsBox').add(habitName);
+        Hive.box<Habit>(
+          'habitsBox',
+        ).add(Habit(title: habitName, completed: false));
         Navigator.pop(context);
       }
     }

@@ -1,24 +1,12 @@
-// // lib/models/habit.dart
+import 'package:hive/hive.dart';
+part 'habit_model.g.dart';
 
-// class Habit {
-//   final String title;
-//   final String description;
-//   final List<DateTime> completedDates;
-
-//   Habit({
-//     required this.title,
-//     this.description = '',
-//     List<DateTime>? completedDates,
-//   }) : completedDates = completedDates ?? [];
-// }
-
+@HiveType(typeId: 0)
 class Habit {
+  @HiveField(0)
   final String title;
-  // final String description;
-  // final List<DateTime> completedDates;
+  @HiveField(1)
+  final bool completed;
 
-  Habit({
-    required this.title, 
-    // required this.completedDates
-    });
+  Habit({required this.title, required this.completed});
 }

@@ -1,11 +1,18 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:luna/models/habit_model.dart';
 import 'package:luna/pages/habit_add.dart';
+import 'package:luna/models/habit_model.dart';
 import 'package:luna/pages/theme.dart';
 
-final habitsBox = Hive.box('habitsBox');
+class HabitPage extends StatefulWidget {
+  const HabitPage({super.key});
+
+  @override
+  State<HabitPage> createState() => _HabitPageState();
+}
+
+final habitsBox = Hive.box<Habit>('habitsBox');
 
 final commonTextStyle = TextStyle(
   fontSize: 18,
@@ -19,9 +26,7 @@ final commonDayStyle = DayStyle(
   dayStrStyle: commonTextStyle,
 );
 
-class HabitPage extends StatelessWidget {
-  const HabitPage({super.key});
-
+class _HabitPageState extends State<HabitPage> {
   void createNewHabit(BuildContext context) {
     showModalBottomSheet(context: context, builder: (_) => const HabitAdd());
   }
@@ -54,8 +59,10 @@ class HabitPage extends StatelessWidget {
           ),
           const SizedBox(height: 27),
           ElevatedButton(
-            onPressed: habitsBox.clear,
-            child: const Text('Clear'),
+            onPressed: () {
+              habitsBox.clear();
+            },
+            child: Text('clear'),
           ),
           const SizedBox(height: 27),
           Expanded(
@@ -85,22 +92,32 @@ class HabitPage extends StatelessWidget {
                                     },
                                     child: Container(
                                       width: double.infinity,
-                                      child: Icon(Icons.delete),
+                                      child: Icon(Icons.delete,color: AppTheme.textColor,),
                                     ),
                                   ),
                                 ),
                           );
                         },
-                        leading: Icon(Icons.person_search),
+                        // leading: Icon(Icons.person_search),
                         title: Text(
-                          habits[index],
+                          habits[index].title,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        subtitle: Text(
-                          'data',
-                          style: Theme.of(context).textTheme.labelMedium,
+                        // subtitle: Text(
+                        //   'data',
+                        //   style: Theme.of(context).textTheme.labelMedium,
+                        // ),
+                        trailing: Checkbox(
+                          value: habits[index].completed,
+                          onChanged: (value) {
+                            var habit = habits[index];  
+                            var updatedHabit = Habit(
+                              title: habit.title,
+                              completed: value!,
+                            );  
+                            habitsBox.putAt(index, updatedHabit);
+                          },
                         ),
-                        trailing: Checkbox(value: false, onChanged: (value) {}),
                         onTap: () {},
                       ),
                     );
