@@ -79,36 +79,39 @@ class _NotesPageState extends State<NotesPage> {
               },
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
-            decoration: BoxDecoration(
-              border: Border.all(color: AppTheme.borderColor),
-              borderRadius: BorderRadius.circular(27),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    style: Theme.of(context).textTheme.titleMedium,
-                    controller: _addNotesController,
-                    decoration: InputDecoration(
-                      hintText: 'Enter note',
-                      hintStyle: TextStyle(
-                        color: AppTheme.borderColor,
-                        fontFamily: 'Fredoka',
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+              decoration: BoxDecoration(
+                border: Border.all(color: AppTheme.borderColor),
+                borderRadius: BorderRadius.circular(27),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      style: Theme.of(context).textTheme.titleMedium,
+                      controller: _addNotesController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter note',
+                        hintStyle: TextStyle(
+                          color: AppTheme.borderColor,
+                          fontFamily: 'Fredoka',
+                        ),
+                        border: InputBorder.none,
                       ),
-                      border: InputBorder.none,
                     ),
                   ),
-                ),
-                SizedBox(width: 9),
-                IconButton(
-                  onPressed: () {
-                    addNote();
-                  },
-                  icon: Icon(Icons.send),
-                ),
-              ],
+                  SizedBox(width: 9),
+                  IconButton(
+                    onPressed: () {
+                      addNote();
+                    },
+                    icon: Icon(Icons.send),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -20,8 +20,14 @@ class HabitAdd extends StatelessWidget {
       }
     }
 
-    return Container(
-      padding: const EdgeInsets.fromLTRB(21, 33, 21, 0),
+    return Padding(
+      // padding: const EdgeInsets.fromLTRB(21, 33, 21, 0),
+      padding: EdgeInsets.fromLTRB(
+        21,
+        33,
+        21,
+        MediaQuery.of(context).viewInsets.bottom + 16,
+      ),
       child: ListView(
         shrinkWrap: true,
         children: [

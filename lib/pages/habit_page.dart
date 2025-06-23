@@ -28,7 +28,7 @@ final commonDayStyle = DayStyle(
 
 class _HabitPageState extends State<HabitPage> {
   void createNewHabit(BuildContext context) {
-    showModalBottomSheet(context: context, builder: (_) => const HabitAdd());
+    showModalBottomSheet(context: context,isScrollControlled: true, builder: (_) => const HabitAdd());
   }
 
   @override
