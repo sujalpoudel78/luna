@@ -15,7 +15,7 @@ class HabitAdd extends StatelessWidget {
       if (habitName.isNotEmpty) {
         Hive.box<Habit>(
           'habitsBox',
-        ).add(Habit(title: habitName, completed: false));
+        ).add(Habit(title: habitName, completedDates: []));
         Navigator.pop(context);
       }
     }

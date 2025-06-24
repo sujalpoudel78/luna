@@ -28,8 +28,14 @@ final commonDayStyle = DayStyle(
 
 class _HabitPageState extends State<HabitPage> {
   void createNewHabit(BuildContext context) {
-    showModalBottomSheet(context: context,isScrollControlled: true, builder: (_) => const HabitAdd());
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => const HabitAdd(),
+    );
   }
+
+  DateTime selectedDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,12 @@ class _HabitPageState extends State<HabitPage> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           EasyDateTimeLine(
-            initialDate: DateTime.now(),
+            initialDate: selectedDate,
+            onDateChange: (date) {
+              setState(() {
+                selectedDate = date;
+              });
+            },
             headerProps: EasyHeaderProps(
               monthPickerType: MonthPickerType.switcher,
               monthStyle: commonTextStyle,
@@ -62,18 +73,24 @@ class _HabitPageState extends State<HabitPage> {
             onPressed: () {
               habitsBox.clear();
             },
-            child: Text('clear'),
+            child: const Text('clear'),
           ),
           const SizedBox(height: 27),
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: habitsBox.listenable(),
               builder: (context, Box box, _) {
-                final habits = box.values.toList();
+                final habits = box.values.toList().cast<Habit>();
                 return ListView.separated(
                   itemBuilder: (context, index) {
+                    final normalized = DateTime(
+                      selectedDate.year,
+                      selectedDate.month,
+                      selectedDate.day,
+                    );
+
                     return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 9),
+                      margin: const EdgeInsets.symmetric(horizontal: 9),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(18),
                         color: AppTheme.surfaceColor,
@@ -82,47 +99,63 @@ class _HabitPageState extends State<HabitPage> {
                         onLongPress: () {
                           showModalBottomSheet(
                             context: context,
-                            builder:
-                                (context) => Container(
-                                  margin: EdgeInsets.all(18),
-                                  child: FilledButton(
-                                    onPressed: () async {
-                                      await habitsBox.deleteAt(index);
-                                      Navigator.pop(context);
-                                    },
-                                    child: Container(
-                                      width: double.infinity,
-                                      child: Icon(Icons.delete,color: AppTheme.textColor,),
-                                    ),
+                            builder: (context) => Container(
+                              margin: const EdgeInsets.all(18),
+                              child: FilledButton(
+                                onPressed: () async {
+                                  await habitsBox.deleteAt(index);
+                                  Navigator.pop(context);
+                                },
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: AppTheme.textColor,
                                   ),
                                 ),
+                              ),
+                            ),
                           );
                         },
-                        // leading: Icon(Icons.person_search),
                         title: Text(
                           habits[index].title,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        // subtitle: Text(
-                        //   'data',
-                        //   style: Theme.of(context).textTheme.labelMedium,
-                        // ),
                         trailing: Checkbox(
-                          value: habits[index].completed,
+                          value: habits[index].completedDates.any(
+                            (date) =>
+                                date.year == normalized.year &&
+                                date.month == normalized.month &&
+                                date.day == normalized.day,
+                          ),
                           onChanged: (value) {
-                            var habit = habits[index];  
-                            var updatedHabit = Habit(
-                              title: habit.title,
-                              completed: value!,
-                            );  
-                            habitsBox.putAt(index, updatedHabit);
+                            setState(() {
+                              if (value == true) {
+                                if (!habits[index].completedDates.any(
+                                  (date) =>
+                                      date.year == normalized.year &&
+                                      date.month == normalized.month &&
+                                      date.day == normalized.day,
+                                )) {
+                                  habits[index].completedDates.add(normalized);
+                                }
+                              } else {
+                                habits[index].completedDates.removeWhere(
+                                  (date) =>
+                                      date.year == normalized.year &&
+                                      date.month == normalized.month &&
+                                      date.day == normalized.day,
+                                );
+                              }
+                              habits[index].save();
+                            });
                           },
                         ),
                         onTap: () {},
                       ),
                     );
                   },
-                  separatorBuilder: (_, __) => SizedBox(height: 18),
+                  separatorBuilder: (_, __) => const SizedBox(height: 18),
                   itemCount: habits.length,
                 );
               },
