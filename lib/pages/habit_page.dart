@@ -1,8 +1,10 @@
 import 'package:easy_date_timeline/easy_date_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:luna/pages/calendar_page.dart';
 import 'package:luna/pages/habit_add.dart';
 import 'package:luna/models/habit_model.dart';
+import 'package:luna/pages/home_page.dart';
 import 'package:luna/pages/theme.dart';
 
 class HabitPage extends StatefulWidget {
@@ -40,7 +42,14 @@ class _HabitPageState extends State<HabitPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('HABITS')),
+      appBar: AppBar(
+        title: const Text('HABITS'),
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.push(context, pageNavigateAnimation(CalendarPage()));
+          }, icon: Icon(Icons.calendar_today)),
+        ],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -99,22 +108,23 @@ class _HabitPageState extends State<HabitPage> {
                         onLongPress: () {
                           showModalBottomSheet(
                             context: context,
-                            builder: (context) => Container(
-                              margin: const EdgeInsets.all(18),
-                              child: FilledButton(
-                                onPressed: () async {
-                                  await habitsBox.deleteAt(index);
-                                  Navigator.pop(context);
-                                },
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Icon(
-                                    Icons.delete,
-                                    color: AppTheme.textColor,
+                            builder:
+                                (context) => Container(
+                                  margin: const EdgeInsets.all(18),
+                                  child: FilledButton(
+                                    onPressed: () async {
+                                      await habitsBox.deleteAt(index);
+                                      Navigator.pop(context);
+                                    },
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Icon(
+                                        Icons.delete,
+                                        color: AppTheme.textColor,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
                           );
                         },
                         title: Text(

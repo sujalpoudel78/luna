@@ -4,21 +4,21 @@ import 'package:luna/pages/habit_page.dart';
 import 'package:luna/pages/notes_page.dart';
 import 'package:luna/pages/theme.dart';
 
+Route pageNavigateAnimation(Widget page) {
+  return PageRouteBuilder(
+    pageBuilder: (_, __, ___) => page,
+    transitionsBuilder: (_, animation, __, child) {
+      final offsetAnimation = Tween<Offset>(
+        begin: Offset(1, 0),
+        end: Offset.zero,
+      ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut));
+      return SlideTransition(position: offsetAnimation, child: child);
+    },
+  );
+}
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  Route pageNavigateAnimation(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (_, __, ___) => page,
-      transitionsBuilder: (_, animation, __, child) {
-        final offsetAnimation = Tween<Offset>(
-          begin: Offset(1, 0),
-          end: Offset.zero,
-        ).animate(CurvedAnimation(parent: animation, curve: Curves.easeInOut));
-        return SlideTransition(position: offsetAnimation, child: child);
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 9,vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 0),
       child: Scaffold(
         appBar: AppBar(
           title: Text('LUNA'),
@@ -72,7 +72,10 @@ class HomePage extends StatelessWidget {
                   children: [
                     Text(
                       'Feature Coming Soon',
-                      style: TextStyle(fontSize: 33, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 33,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
@@ -95,7 +98,10 @@ class HomePage extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context,pageNavigateAnimation(HabitPage()));
+                        Navigator.push(
+                          context,
+                          pageNavigateAnimation(HabitPage()),
+                        );
                       },
                       child: buildGridItem(
                         'assets/icons/list-check.svg',
@@ -104,7 +110,10 @@ class HomePage extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, pageNavigateAnimation(NotesPage()));
+                        Navigator.push(
+                          context,
+                          pageNavigateAnimation(NotesPage()),
+                        );
                       },
                       child: buildGridItem('assets/icons/book.svg', 'Notes'),
                     ),

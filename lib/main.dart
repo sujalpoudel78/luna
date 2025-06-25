@@ -5,17 +5,13 @@ import 'package:luna/pages/home_page.dart';
 import 'package:luna/pages/theme.dart';
 
 Future<void> main() async {
-  // Initialize Hive
   await Hive.initFlutter();
 
-  // Register the adapter *before* opening any boxes that use this type
   Hive.registerAdapter(HabitAdapter());
 
-  // Open boxes
-  await Hive.openBox('notesBox');           // regular box
-  await Hive.openBox<Habit>('habitsBox');  // strongly-typed box
+  await Hive.openBox('notesBox');
+  await Hive.openBox<Habit>('habitsBox');
 
-  // Run the app
   runApp(const MyApp());
 }
 
