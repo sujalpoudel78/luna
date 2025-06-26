@@ -17,7 +17,7 @@ class HabitPage extends StatefulWidget {
 final habitsBox = Hive.box<Habit>('habitsBox');
 
 final commonTextStyle = TextStyle(
-  fontSize: 18,
+  fontSize: 15,
   fontWeight: FontWeight.w600,
   color: AppTheme.textColor,
 );
@@ -76,13 +76,6 @@ class _HabitPageState extends State<HabitPage> {
               todayHighlightStyle: TodayHighlightStyle.withBorder,
               todayHighlightColor: AppTheme.primaryColor,
             ),
-          ),
-          const SizedBox(height: 27),
-          ElevatedButton(
-            onPressed: () {
-              habitsBox.clear();
-            },
-            child: const Text('clear'),
           ),
           const SizedBox(height: 27),
           Expanded(

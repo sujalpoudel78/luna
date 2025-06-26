@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // Dark Theme - Amoled
-  static Color backgroundDark = Color(0xff000000);
-  static Color backgroundColor = Color(0xFF000000); // Pure black for AMOLED
-  static Color primaryColor = Color(0xFF9B5FFF); // Soft purple
-  static Color accentColor = Color(0xFFC2A3FF); // Light lavender tone
-  static Color textColor = Color(0xFFE4E4E7); // Light gray text
-  static Color surfaceColor = Color(0xFF212121); //Lighter
-  static Color dividerColor = Color(0xFF2E2E2E); // Divider lines
-  static Color errorColor = Color(0xFFCF6679); // Error
+  static Color backgroundDark = Color(0xFF0F0F0F);
+  static Color backgroundColor = Color(0xFF0F0F0F);
+  static Color primaryColor = Color(0xFF9B5FFF);
+  static Color accentColor = Color(0xFFC2A3FF);
+  static Color textColor = Color(0xFFE4E4E7);
+  static Color surfaceColor = Color(0xFF212121);
+  static Color dividerColor = Color(0xFF2E2E2E);
+  static Color errorColor = Color(0xFFCF6679);
   static Color borderColor = Color.fromRGBO(255, 255, 255, .27);
 
   static ThemeData get darkTheme {
