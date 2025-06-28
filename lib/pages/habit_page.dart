@@ -50,126 +50,129 @@ class _HabitPageState extends State<HabitPage> {
           }, icon: Icon(Icons.calendar_today)),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          EasyDateTimeLine(
-            initialDate: selectedDate,
-            onDateChange: (date) {
-              setState(() {
-                selectedDate = date;
-              });
-            },
-            headerProps: EasyHeaderProps(
-              monthPickerType: MonthPickerType.switcher,
-              monthStyle: commonTextStyle,
-              dateFormatter: DateFormatter.fullDateDayAsStrMY(),
-              selectedDateStyle: commonTextStyle,
+      body: Padding(
+        padding: const EdgeInsets.all(9.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            EasyDateTimeLine(
+              initialDate: selectedDate,
+              onDateChange: (date) {
+                setState(() {
+                  selectedDate = date;
+                });
+              },
+              headerProps: EasyHeaderProps(
+                monthPickerType: MonthPickerType.switcher,
+                monthStyle: commonTextStyle,
+                dateFormatter: DateFormatter.fullDateDayAsStrMY(),
+                selectedDateStyle: commonTextStyle,
+              ),
+              dayProps: EasyDayProps(
+                width: MediaQuery.of(context).size.width / 7,
+                dayStructure: DayStructure.dayNumDayStr,
+                todayStyle: commonDayStyle,
+                inactiveDayStyle: commonDayStyle,
+                activeDayStyle: commonDayStyle,
+                borderColor: Colors.transparent,
+                todayHighlightStyle: TodayHighlightStyle.withBorder,
+                todayHighlightColor: AppTheme.primaryColor,
+              ),
             ),
-            dayProps: EasyDayProps(
-              width: MediaQuery.of(context).size.width / 7,
-              dayStructure: DayStructure.dayNumDayStr,
-              todayStyle: commonDayStyle,
-              inactiveDayStyle: commonDayStyle,
-              activeDayStyle: commonDayStyle,
-              borderColor: Colors.transparent,
-              todayHighlightStyle: TodayHighlightStyle.withBorder,
-              todayHighlightColor: AppTheme.primaryColor,
-            ),
-          ),
-          const SizedBox(height: 27),
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: habitsBox.listenable(),
-              builder: (context, Box box, _) {
-                final habits = box.values.toList().cast<Habit>();
-                return ListView.separated(
-                  itemBuilder: (context, index) {
-                    final normalized = DateTime(
-                      selectedDate.year,
-                      selectedDate.month,
-                      selectedDate.day,
-                    );
-
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 9),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(18),
-                        color: AppTheme.surfaceColor,
-                      ),
-                      child: ListTile(
-                        onLongPress: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder:
-                                (context) => Container(
-                                  margin: const EdgeInsets.all(18),
-                                  child: FilledButton(
-                                    onPressed: () async {
-                                      await habitsBox.deleteAt(index);
-                                      Navigator.pop(context);
-                                    },
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Icon(
-                                        Icons.delete,
-                                        color: AppTheme.textColor,
+            const SizedBox(height: 18),
+            Expanded(
+              child: ValueListenableBuilder(
+                valueListenable: habitsBox.listenable(),
+                builder: (context, Box box, _) {
+                  final habits = box.values.toList().cast<Habit>();
+                  return ListView.separated(
+                    itemBuilder: (context, index) {
+                      final normalized = DateTime(
+                        selectedDate.year,
+                        selectedDate.month,
+                        selectedDate.day,
+                      );
+        
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 9),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          color: AppTheme.surfaceColor,
+                        ),
+                        child: ListTile(
+                          onLongPress: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder:
+                                  (context) => Container(
+                                    margin: const EdgeInsets.all(9),
+                                    child: FilledButton(
+                                      onPressed: () async {
+                                        await habitsBox.deleteAt(index);
+                                        Navigator.pop(context);
+                                      },
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: Icon(
+                                          Icons.delete,
+                                          color: AppTheme.textColor,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                          );
-                        },
-                        title: Text(
-                          habits[index].title,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        trailing: Checkbox(
-                          value: habits[index].completedDates.any(
-                            (date) =>
-                                date.year == normalized.year &&
-                                date.month == normalized.month &&
-                                date.day == normalized.day,
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              if (value == true) {
-                                if (!habits[index].completedDates.any(
-                                  (date) =>
-                                      date.year == normalized.year &&
-                                      date.month == normalized.month &&
-                                      date.day == normalized.day,
-                                )) {
-                                  habits[index].completedDates.add(normalized);
-                                }
-                              } else {
-                                habits[index].completedDates.removeWhere(
-                                  (date) =>
-                                      date.year == normalized.year &&
-                                      date.month == normalized.month &&
-                                      date.day == normalized.day,
-                                );
-                              }
-                              habits[index].save();
-                            });
+                            );
                           },
+                          title: Text(
+                            habits[index].title,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          trailing: Checkbox(
+                            value: habits[index].completedDates.any(
+                              (date) =>
+                                  date.year == normalized.year &&
+                                  date.month == normalized.month &&
+                                  date.day == normalized.day,
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                if (value == true) {
+                                  if (!habits[index].completedDates.any(
+                                    (date) =>
+                                        date.year == normalized.year &&
+                                        date.month == normalized.month &&
+                                        date.day == normalized.day,
+                                  )) {
+                                    habits[index].completedDates.add(normalized);
+                                  }
+                                } else {
+                                  habits[index].completedDates.removeWhere(
+                                    (date) =>
+                                        date.year == normalized.year &&
+                                        date.month == normalized.month &&
+                                        date.day == normalized.day,
+                                  );
+                                }
+                                habits[index].save();
+                              });
+                            },
+                          ),
+                          onTap: () {},
                         ),
-                        onTap: () {},
-                      ),
-                    );
-                  },
-                  separatorBuilder: (_, __) => const SizedBox(height: 18),
-                  itemCount: habits.length,
-                );
-              },
+                      );
+                    },
+                    separatorBuilder: (_, __) => const SizedBox(height: 18),
+                    itemCount: habits.length,
+                  );
+                },
+              ),
             ),
-          ),
-          FloatingActionButton(
-            onPressed: () => createNewHabit(context),
-            splashColor: AppTheme.accentColor,
-            child: Icon(Icons.add, color: AppTheme.textColor),
-          ),
-        ],
+            FloatingActionButton(
+              onPressed: () => createNewHabit(context),
+              splashColor: AppTheme.accentColor,
+              child: Icon(Icons.add, color: AppTheme.textColor),
+            ),
+          ],
+        ),
       ),
     );
   }

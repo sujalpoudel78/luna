@@ -20,20 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 21,
-      ),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Luna',
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.dark,
-        home: const HomePage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Luna',
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
+      home: const HomePage(),
     );
   }
 }

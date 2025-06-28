@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  // Dark Theme - Amoled
   static Color backgroundDark = Color(0xFF0F0F0F);
   static Color backgroundColor = Color(0xFF0F0F0F);
   static Color primaryColor = Color(0xFF9B5FFF);
@@ -10,7 +9,7 @@ class AppTheme {
   static Color surfaceColor = Color(0xFF212121);
   static Color dividerColor = Color(0xFF2E2E2E);
   static Color errorColor = Color(0xFFCF6679);
-  static Color borderColor = Color.fromRGBO(255, 255, 255, .27);
+  static Color borderColor = Color.fromRGBO(255, 255, 255, .18);
 
   static ThemeData get darkTheme {
     return ThemeData(
@@ -32,7 +31,7 @@ class AppTheme {
         iconTheme: IconThemeData(color: textColor),
         titleTextStyle: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 27,
+          fontSize: 24,
           fontWeight: FontWeight.w700,
           letterSpacing: 9,
 
@@ -42,25 +41,25 @@ class AppTheme {
       textTheme: TextTheme(
         titleLarge: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 27,
-          fontWeight: FontWeight.w700,
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
           color: textColor,
         ),
         titleMedium: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 21,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
           color: textColor,
         ),
         headlineMedium: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 18,
+          fontSize: 15,
           fontWeight: FontWeight.w600,
           color: textColor,
         ),
         bodyMedium: TextStyle(
           fontFamily: 'Fredoka',
-          fontSize: 18,
+          fontSize: 15,
           fontWeight: FontWeight.w500,
           color: textColor,
         ),

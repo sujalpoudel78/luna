@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:luna/pages/habit_page.dart';
 import 'package:luna/pages/theme.dart';
 import 'package:luna/models/habit_model.dart';
@@ -58,6 +57,7 @@ class _CalendarPageState extends State<CalendarPage> {
       body: Padding(
         padding: const EdgeInsets.all(9.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: GridView.builder(
@@ -79,6 +79,10 @@ class _CalendarPageState extends State<CalendarPage> {
                     decoration: BoxDecoration(
                       color: color,
                       borderRadius: BorderRadius.circular(9),
+                      border: Border.all(
+                        width: 0.9,
+                        color: Color(0xffFFFFFF).withAlpha(12)
+                      )
                     ),
                     child: Center(child: Text(date.day.toString())),
                   );
