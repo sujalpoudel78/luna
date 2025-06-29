@@ -13,9 +13,17 @@ class HabitAdd extends StatelessWidget {
     void addHabit() {
       final habitName = habitController.text.trim();
       if (habitName.isNotEmpty) {
-        Hive.box<Habit>(
-          'habitsBox',
-        ).add(Habit(title: habitName, completedDates: []));
+        final now = DateTime.now();
+        final today = DateTime(now.year, now.month, now.day); // normalize
+
+        Hive.box<Habit>('habitsBox').add(
+          Habit(
+            title: habitName,
+            completedDates: [],
+            createdAt: today, // <-- add this line
+          ),
+        );
+
         Navigator.pop(context);
       }
     }

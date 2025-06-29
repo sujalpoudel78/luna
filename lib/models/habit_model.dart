@@ -9,5 +9,12 @@ class Habit extends HiveObject {
   @HiveField(1)
   final List<DateTime> completedDates;
 
-  Habit({required this.title, required this.completedDates});
+  @HiveField(2)
+  final DateTime createdAt; // <-- add this
+
+  Habit({
+    required this.title,
+    required this.completedDates,
+    required this.createdAt, // <-- add this
+  });
 }

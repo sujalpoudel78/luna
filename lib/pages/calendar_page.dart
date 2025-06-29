@@ -14,9 +14,9 @@ class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
-    DateTime firstofmonth = DateTime(now.year, now.month, 1);
+    DateTime firstofmonth = DateTime(now.year, now.month, 0);
 
-    int daysInMonth = DateTime(now.year, now.month + 1, 0).day;
+    int daysInMonth = DateTime(now.year, now.month, 0).day;
     int startingWeekDay = firstofmonth.weekday;
 
     List<DateTime?> calendarDays = [];
@@ -30,9 +30,12 @@ class _CalendarPageState extends State<CalendarPage> {
     }
 
     Color getDayColor(DateTime date, List<Habit> habits) {
-      if (habits.isEmpty) return Colors.transparent;
+      final validHabits =
+          habits.where((habit) => !habit.createdAt.isAfter(date)).toList();
+
+      if (validHabits.isEmpty) return Colors.transparent;
       int completedCount =
-          habits.where((habit) {
+          validHabits.where((habit) {
             return habit.completedDates.any(
               (d) =>
                   d.year == date.year &&
@@ -55,7 +58,7 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('CALENDAR')),
       body: Padding(
-        padding: const EdgeInsets.all(9.0),
+        padding: const EdgeInsets.symmetric(vertical: 33, horizontal: 9),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -81,8 +84,8 @@ class _CalendarPageState extends State<CalendarPage> {
                       borderRadius: BorderRadius.circular(9),
                       border: Border.all(
                         width: 0.9,
-                        color: Color(0xffFFFFFF).withAlpha(12)
-                      )
+                        color: Color(0xffFFFFFF).withAlpha(12),
+                      ),
                     ),
                     child: Center(child: Text(date.day.toString())),
                   );

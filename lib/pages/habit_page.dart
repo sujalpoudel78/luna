@@ -45,9 +45,12 @@ class _HabitPageState extends State<HabitPage> {
       appBar: AppBar(
         title: const Text('HABITS'),
         actions: [
-          IconButton(onPressed: () {
-            Navigator.push(context, pageNavigateAnimation(CalendarPage()));
-          }, icon: Icon(Icons.calendar_today)),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, pageNavigateAnimation(CalendarPage()));
+            },
+            icon: Icon(Icons.calendar_today),
+          ),
         ],
       ),
       body: Padding(
@@ -79,12 +82,26 @@ class _HabitPageState extends State<HabitPage> {
                 todayHighlightColor: AppTheme.primaryColor,
               ),
             ),
+            // const SizedBox(height: 18),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     habitsBox.clear();
+            //   },
+            //   child: Text('clear'),
+            // ),
             const SizedBox(height: 18),
             Expanded(
               child: ValueListenableBuilder(
                 valueListenable: habitsBox.listenable(),
                 builder: (context, Box box, _) {
-                  final habits = box.values.toList().cast<Habit>();
+                  final habits =
+                      box.values
+                          .cast<Habit>()
+                          .where(
+                            (habit) => !habit.createdAt.isAfter(selectedDate),
+                          )
+                          .toList();
+
                   return ListView.separated(
                     itemBuilder: (context, index) {
                       final normalized = DateTime(
@@ -92,7 +109,7 @@ class _HabitPageState extends State<HabitPage> {
                         selectedDate.month,
                         selectedDate.day,
                       );
-        
+
                       return Container(
                         margin: const EdgeInsets.symmetric(horizontal: 9),
                         decoration: BoxDecoration(
@@ -101,6 +118,7 @@ class _HabitPageState extends State<HabitPage> {
                         ),
                         child: ListTile(
                           onLongPress: () {
+                            
                             showModalBottomSheet(
                               context: context,
                               builder:
@@ -142,7 +160,9 @@ class _HabitPageState extends State<HabitPage> {
                                         date.month == normalized.month &&
                                         date.day == normalized.day,
                                   )) {
-                                    habits[index].completedDates.add(normalized);
+                                    habits[index].completedDates.add(
+                                      normalized,
+                                    );
                                   }
                                 } else {
                                   habits[index].completedDates.removeWhere(
