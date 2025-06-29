@@ -118,7 +118,6 @@ class _HabitPageState extends State<HabitPage> {
                         ),
                         child: ListTile(
                           onLongPress: () {
-                            
                             showModalBottomSheet(
                               context: context,
                               builder:
@@ -145,6 +144,7 @@ class _HabitPageState extends State<HabitPage> {
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           trailing: Checkbox(
+                            activeColor: AppTheme.accentColor,
                             value: habits[index].completedDates.any(
                               (date) =>
                                   date.year == normalized.year &&

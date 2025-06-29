@@ -7,8 +7,10 @@ However, if you want to try out the app, any kind of feedback is greatly appreci
 ## Features
 
 - [x] Notes  
-- [ ] Habit Tracker  
+- [x] Habit Tracker  
 - [ ] Screentime  
+
+All data is stored locally without needing to sign in or connect to the internet.
 
 ## 📦 Installation
 
