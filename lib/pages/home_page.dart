@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:luna/pages/habit_page.dart';
 import 'package:luna/pages/notes_page.dart';
+import 'package:luna/pages/screentime.dart';
 import 'package:luna/pages/theme.dart';
 
 Route pageNavigateAnimation(Widget page) {
@@ -68,18 +69,7 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(9),
                     border: Border.all(color: AppTheme.borderColor, width: 1),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Feature Coming Soon',
-                        style: TextStyle(
-                          fontSize: 33,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: Screentime()
                 ),
                 SizedBox(height: 18),
                 Container(
@@ -117,7 +107,7 @@ class HomePage extends StatelessWidget {
                         },
                         child: buildGridItem('assets/icons/book.svg', 'Notes'),
                       ),
-                      buildGridItem('assets/icons/sapling.svg', '---'),
+                      // buildGridItem('assets/icons/sapling.svg', '---'),
                     ],
                   ),
                 ),
