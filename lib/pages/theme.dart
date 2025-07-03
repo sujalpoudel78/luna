@@ -51,6 +51,12 @@ class AppTheme {
           fontWeight: FontWeight.w600,
           color: textColor,
         ),
+        titleSmall: TextStyle(
+          fontFamily: 'Fredoka',
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+          color: textColor,
+        ),
         headlineMedium: TextStyle(
           fontFamily: 'Fredoka',
           fontSize: 15,
