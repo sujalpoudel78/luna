@@ -79,7 +79,7 @@ class _ScreentimeState extends State<Screentime> {
       for (var entry in appTimeMap.entries) {
         final app = await DeviceApps.getApp(entry.key, true);
 
-        if (_isSystemApp(entry.key, app)) {
+        if (_isLauncherApp(entry.key, app)) {
           continue;
         }
 
@@ -109,53 +109,57 @@ class _ScreentimeState extends State<Screentime> {
     else
       return '$hours hours $remainingMinutes min';
   }
-  // Check system apps
-  bool _isSystemApp(String packageName, Application? app) {
-    if (app != null && app.systemApp) {
-      return true;
-    }
 
-    // Backup plan: list system apps explicity
-    final systemPrefixes = [
-      'com.android.',
-      'com.google.android.',
-      'android.',
-      'com.samsung.',
-      'com.sec.',
-      'com.lge.',
-      'com.htc.',
-      'com.motorola.',
-      'com.huawei.',
-      'com.xiaomi.',
-      'com.oppo.',
-      'com.vivo.',
-      'com.oneplus.',
-    ];
-
-    for (String prefix in systemPrefixes) {
-      if (packageName.startsWith(prefix)) {
-        return true;
-      }
-    }
-
-    //Backup backup plan: Filter specific system apps that might not follow the pattern
-    final systemApps = [
-      'com.miui.home',
-      'com.miui.securitycenter',
-      'com.miui.powerkeeper',
+  // Check if app is a launcher (home screen) app - these should be excluded
+  bool _isLauncherApp(String packageName, Application? app) {
+    //common launcher package patterns
+    final launcherPatterns = [
       'launcher',
-      'systemui',
-      'settings',
+      'home',
+      '.launcher',
+      'trebuchet', // CyanogenMod launcher
+      'pixel.launcher', // Google Pixel launcher
+      'touchwiz.launcher', // Samsung TouchWiz
+      'miui.home', // MIUI home
+      'nova.launcher', // Nova launcher
+      'actionlauncher', // Action launcher
+      'microsoft.launcher', // Microsoft launcher
+      'lawnchair', // Lawnchair launcher
+      'oneplus.launcher', // OnePlus launcher
+      'lineageos.trebuchet', // LineageOS launcher
     ];
 
     final lowerPackage = packageName.toLowerCase();
-    for (String sysApp in systemApps) {
-      if (lowerPackage.contains(sysApp)) {
+    for (String pattern in launcherPatterns) {
+      if (lowerPackage.contains(pattern)) {
         return true;
       }
     }
 
-    return false;
+    // Specific launcher package names
+    final launcherPackages = [
+      'com.miui.home',
+      'com.android.launcher',
+      'com.android.launcher2',
+      'com.android.launcher3',
+      'com.google.android.launcher',
+      'com.sec.android.app.launcher',
+      'com.samsung.android.launcher',
+      'com.oneplus.launcher',
+      'com.huawei.android.launcher',
+      'com.xiaomi.launcher',
+      'com.oppo.launcher',
+      'com.vivo.launcher',
+      'com.lge.launcher2',
+      'com.htc.launcher',
+      'com.motorola.launcher',
+      'com.teslacoilsw.launcher', // Nova Launcher
+      'com.actionlauncher.playstore',
+      'com.microsoft.launcher',
+      'ch.deletescape.lawnchair.plah',
+    ];
+
+    return launcherPackages.contains(packageName);
   }
 
   String _calculatePercentage(int appDuration) {
